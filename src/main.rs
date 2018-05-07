@@ -15,13 +15,14 @@ use gotham::state::State;
 use hyper::StatusCode;
 
 pub fn say_hello(state: State) -> Box<HandlerFuture> {
-    let p = primal::Primes::all().nth(1000000).unwrap();
+    let max = 10_000_000;
+    let p = primal::Primes::all().nth(max).unwrap();
 
     let res = create_response(
         &state,
         StatusCode::Ok,
         Some((
-            format!("The 10000001st prime is {}", p).into_bytes(),
+            format!("The {}st prime is {}", max + 1, p).into_bytes(),
             mime::TEXT_PLAIN,
         )),
     );
@@ -40,5 +41,5 @@ fn router() -> Router {
 pub fn main() {
     let addr = "127.0.0.1:7878";
     println!("Listening for requests at http://{}", addr);
-    gotham::start(addr, router());
+    gotham::start_with_num_threads(addr, 12, router());
 }
