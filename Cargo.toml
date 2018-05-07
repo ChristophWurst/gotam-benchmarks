@@ -5,7 +5,7 @@ authors = ["Christoph Wurst <christoph@winzerhof-wurst.at>"]
 
 [dependencies]
 futures = "0.1"
-gotham = "0.2"
+gotham = { git = "https://github.com/ChristophWurst/gotham.git", branch = "refactor/tokio-reform" }
 hyper = "*"
 mime = "*"
 primal = "0.2.3"
